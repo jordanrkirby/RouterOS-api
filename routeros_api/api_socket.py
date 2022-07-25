@@ -10,9 +10,10 @@ except ImportError:
 EINTR = getattr(errno, 'EINTR', 4)
 
 def get_socket(hostname, port, use_ssl=False, ssl_verify=True, ssl_verify_hostname=True, ssl_context=None, timeout=15.0):
-    if ipaddress.IPv6Address(hostname):
-        api_socket = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
-    else:
+    try: 
+        if ipaddress.IPv6Address(hostname):
+            api_socket = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
+    except:
         api_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     api_socket.settimeout(timeout)
     while True:
